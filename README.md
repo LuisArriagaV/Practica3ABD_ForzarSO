@@ -73,7 +73,6 @@ Practica3_ForzarSO/
 ├── README.md                   # Este archivo
 ├── setup_bancotech_db.sql      # Script de base de datos
 ├── ESTUDIANTES.md              # Guía para estudiantes
-├── README_PROFESOR_SIMPLE.md   # Guía para profesor
 └── webapp/
     ├── app.py                  # Aplicación Flask
     ├── static/
