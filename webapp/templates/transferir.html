@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Transferir - BancoTech{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="fas fa-exchange-alt"></i> Realizar Transferencia</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('transferir') }}">
+                    <div class="mb-3">
+                        <label for="cuenta_origen" class="form-label">Cuenta Origen</label>
+                        <select class="form-select" id="cuenta_origen" name="cuenta_origen" required>
+                            {% for cuenta in cuentas %}
+                            <option value="{{ cuenta.id }}">
+                                {{ cuenta.numero_cuenta }} - {{ cuenta.tipo_cuenta }} (Saldo: ${{
+                                "%.2f"|format(cuenta.saldo) }})
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="cuenta_destino" class="form-label">Cuenta Destino</label>
+                        <input type="text" class="form-control" id="cuenta_destino" name="cuenta_destino"
+                            placeholder="Número de cuenta destino" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="monto" class="form-label">Monto</label>
+                        <input type="number" class="form-control" id="monto" name="monto" step="0.01" min="0.01"
+                            placeholder="0.00" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="descripcion" class="form-label">Descripción (opcional)</label>
+                        <input type="text" class="form-control" id="descripcion" name="descripcion"
+                            placeholder="Concepto de la transferencia">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-paper-plane"></i> Transferir
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - BancoTech{% endblock %}
+
+{% block content %}
+<h2><i class="fas fa-tachometer-alt"></i> Panel de Administración</h2>
+<hr>
+
+<!-- Estadísticas -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <h5><i class="fas fa-users"></i> Clientes</h5>
+                <h2>{{ "{:,}".format(total_clientes) }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <h5><i class="fas fa-wallet"></i> Cuentas</h5>
+                <h2>{{ "{:,}".format(total_cuentas) }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <h5><i class="fas fa-dollar-sign"></i> Depósitos</h5>
+                <h2>${{ "{:,.2f}".format(total_depositos) }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <h5><i class="fas fa-exchange-alt"></i> Trans. Hoy</h5>
+                <h2>{{ "{:,}".format(transacciones_hoy) }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Accesos Rápidos -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <a href="{{ url_for('admin_clientes') }}" class="btn btn-outline-primary btn-lg w-100 mb-2">
+            <i class="fas fa-users"></i> Gestión de Clientes
+        </a>
+    </div>
+    <div class="col-md-6">
+        <a href="{{ url_for('admin_transacciones') }}" class="btn btn-outline-success btn-lg w-100 mb-2">
+            <i class="fas fa-list"></i> Ver Transacciones
+        </a>
+    </div>
+</div>
+
+<!-- Transacciones Recientes -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-history"></i> Transacciones Recientes</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Fecha</th>
+                                <th>Tipo</th>
+                                <th>Origen</th>
+                                <th>Destino</th>
+                                <th>Monto</th>
+                                <th>IP</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for t in transacciones %}
+                            <tr>
+                                <td>{{ t.id }}</td>
+                                <td>{{ t.fecha.strftime('%Y-%m-%d %H:%M') }}</td>
+                                <td>{{ t.tipo_transaccion }}</td>
+                                <td>{{ t.cuenta_origen or '-' }}</td>
+                                <td>{{ t.cuenta_destino or '-' }}</td>
+                                <td>${{ "%.2f"|format(t.monto) }}</td>
+                                <td><small>{{ t.ip_origen or '-' }}</small></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

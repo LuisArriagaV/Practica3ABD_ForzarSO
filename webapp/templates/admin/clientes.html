@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Gestión de Clientes - Admin{% endblock %}
+
+{% block content %}
+<div class="row mb-3">
+    <div class="col-12">
+        <h2><i class="fas fa-users"></i> Gestión de Clientes</h2>
+        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left"></i> Volver
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Username</th>
+                                <th>Password</th>
+                                <th>PIN</th>
+                                <th>Ciudad</th>
+                                <th>Identificación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cliente in clientes %}
+                            <tr>
+                                <td>{{ cliente.id }}</td>
+                                <td>{{ cliente.nombre }} {{ cliente.apellido }}</td>
+                                <td>{{ cliente.email }}</td>
+                                <td>{{ cliente.username }}</td>
+                                <td><code>{{ cliente.password }}</code></td>
+                                <td><code>{{ cliente.pin }}</code></td>
+                                <td>{{ cliente.ciudad }}</td>
+                                <td>{{ cliente.numero_identificacion }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

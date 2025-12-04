@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Mis Tarjetas - BancoTech{% endblock %}
+
+{% block content %}
+<h2><i class="fas fa-credit-card"></i> Mis Tarjetas</h2>
+<hr>
+
+<div class="row">
+    {% for tarjeta in tarjetas %}
+    <div class="col-md-6 mb-4">
+        <div class="card bg-gradient text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <div class="card-body">
+                <h5 class="card-title">{{ tarjeta.tipo }}</h5>
+                <p class="card-text">
+                    <strong>Número:</strong> {{ tarjeta.numero_tarjeta }}<br>
+                    <strong>CVV:</strong> {{ tarjeta.cvv }}<br>
+                    <strong>Vence:</strong> {{ tarjeta.fecha_expiracion }}<br>
+                    <strong>Cuenta:</strong> {{ tarjeta.numero_cuenta }}
+                </p>
+                {% if tarjeta.limite_credito %}
+                <p class="mb-0">
+                    <small>Límite de crédito: ${{ "%.2f"|format(tarjeta.limite_credito) }}</small>
+                </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% if not tarjetas %}
+<div class="alert alert-info">
+    <i class="fas fa-info-circle"></i> No tienes tarjetas asociadas a tus cuentas.
+</div>
+{% endif %}
+{% endblock %}

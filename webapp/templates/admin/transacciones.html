@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Transacciones - Admin{% endblock %}
+
+{% block content %}
+<div class="row mb-3">
+    <div class="col-12">
+        <h2><i class="fas fa-list"></i> Todas las Transacciones</h2>
+        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left"></i> Volver
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Fecha</th>
+                                <th>Tipo</th>
+                                <th>Cuenta Origen</th>
+                                <th>Cuenta Destino</th>
+                                <th>Monto</th>
+                                <th>Estado</th>
+                                <th>IP Origen</th>
+                                <th>Dispositivo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for t in transacciones %}
+                            <tr>
+                                <td>{{ t.id }}</td>
+                                <td>{{ t.fecha.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                                <td>{{ t.tipo_transaccion }}</td>
+                                <td>{{ t.cuenta_origen or '-' }}</td>
+                                <td>{{ t.cuenta_destino or '-' }}</td>
+                                <td>${{ "%.2f"|format(t.monto) }}</td>
+                                <td>
+                                    <span class="badge bg-{{ 'success' if t.estado == 'Completada' else 'warning' }}">
+                                        {{ t.estado }}
+                                    </span>
+                                </td>
+                                <td><small>{{ t.ip_origen or '-' }}</small></td>
+                                <td><small>{{ t.dispositivo or '-' }}</small></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
