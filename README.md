@@ -73,7 +73,6 @@ Practica3_ForzarSO/
 ├── README.md                   # Este archivo
 ├── setup_bancotech_db.sql      # Script de base de datos
 ├── ESTUDIANTES.md              # Guía para estudiantes
-├── README_PROFESOR_SIMPLE.md   # Guía para profesor
 └── webapp/
     ├── app.py                  # Aplicación Flask
     ├── static/
@@ -127,7 +126,7 @@ app.run(debug=True, host='0.0.0.0', port=5003)
 
 Continúa con:
 - [ESTUDIANTES.md](ESTUDIANTES.md) - Guía de auditoría
-- [README_PROFESOR_SIMPLE.md](README_PROFESOR_SIMPLE.md) - Soluciones
+
 
 ---
 
