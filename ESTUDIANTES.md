@@ -1,18 +1,18 @@
 # Práctica 3: BancoTech - Auditoría y Stress Testing
 
-## 📋 Información
+## Información
 
 **Duración:** 3-4 horas  
 **Nivel:** Intermedio-Avanzado
 
-## 🎯 Objetivos
+## Objetivos
 
 1. Auditar un sistema bancario con **grandes volúmenes** de datos
 2. Identificar vulnerabilidades de **seguridad** y **performance**
 3. Detectar **race conditions** en transacciones concurrentes
 4. Proponer y aplicar **correcciones**
 
-## 🚀 Configuración
+## Configuración
 
 ### Paso 1: Crear la Base de Datos
 
@@ -33,15 +33,17 @@ Visita: http://localhost:5002
 ### Paso 3: Explorar el Sistema
 
 **Credenciales de cliente:**
+
 - Usuario: `user1` / Contraseña: `password1`
 - Usuario: `user100` / Contraseña: `password100`
 
 **Credenciales de admin:**
+
 - Usuario: `admin` / Contraseña: `admin123`
 
 ---
 
-## 📝 PARTE 1: EXPLORACIÓN DEL SISTEMA
+## PARTE 1: EXPLORACIÓN DEL SISTEMA
 
 ### Ejercicio 1.1: Explorar como Cliente
 
@@ -52,6 +54,7 @@ Visita: http://localhost:5002
 5. Ve tus tarjetas
 
 **Documenta:**
+
 ```
 ¿Qué información ves en el dashboard?
 
@@ -71,6 +74,7 @@ Visita: http://localhost:5002
 3. Verifica que se completó
 
 **Documenta:**
+
 ```
 ¿Qué validaciones hace el sistema?
 
@@ -89,6 +93,7 @@ Visita: http://localhost:5002
 5. Ve "Transacciones"
 
 **Documenta:**
+
 ```
 ¿Qué información sensible ves en "Gestión de Clientes"?
 
@@ -100,23 +105,27 @@ Visita: http://localhost:5002
 
 ---
 
-## 🔍 PARTE 2: AUDITORÍA DE SEGURIDAD
+## PARTE 2: AUDITORÍA DE SEGURIDAD
 
 ### Ejercicio 2.1: Auditar Credenciales
 
 Conéctate a la base de datos:
+
 ```bash
 psql -U bancotech_app -d bancotech_db
 ```
+
 Contraseña: `banco123`
 
 **Investiga:**
+
 ```sql
 -- Ver cómo se almacenan las contraseñas
 SELECT username, password, pin FROM credenciales LIMIT 5;
 ```
 
 **Documenta:**
+
 ```
 HALLAZGO #1: Contraseñas
 ¿Cómo se almacenan?:
@@ -138,6 +147,7 @@ SELECT numero_tarjeta, cvv, fecha_expiracion FROM tarjetas LIMIT 5;
 ```
 
 **Documenta:**
+
 ```
 HALLAZGO #2: Tarjetas
 ¿Qué datos están expuestos?:
@@ -162,6 +172,7 @@ ORDER BY table_name;
 ```
 
 **Documenta:**
+
 ```
 HALLAZGO #3: Privilegios
 ¿Qué permisos tiene bancotech_app?:
@@ -177,18 +188,19 @@ HALLAZGO #3: Privilegios
 
 ---
 
-## ⚡ PARTE 3: ANÁLISIS DE PERFORMANCE
+## PARTE 3: ANÁLISIS DE PERFORMANCE
 
 ### Ejercicio 3.1: Identificar Queries Lentas
 
 ```sql
 -- Buscar transacciones sin índice
 EXPLAIN ANALYZE
-SELECT * FROM transacciones 
+SELECT * FROM transacciones
 WHERE cuenta_origen_id = 100;
 ```
 
 **Documenta:**
+
 ```
 Tipo de scan:
 
@@ -208,13 +220,14 @@ Filas escaneadas:
 
 ```sql
 -- Ver índices existentes
-SELECT tablename, indexname 
-FROM pg_indexes 
+SELECT tablename, indexname
+FROM pg_indexes
 WHERE schemaname = 'public'
 ORDER BY tablename;
 ```
 
 **Documenta:**
+
 ```
 Tablas sin índices en foreign keys:
 
@@ -226,23 +239,26 @@ Impacto en performance:
 
 ---
 
-## 🏁 PARTE 4: RACE CONDITIONS
+## PARTE 4: RACE CONDITIONS
 
 ### Ejercicio 4.1: Probar Transferencia Concurrente
 
 **Abrir 2 terminales y ejecutar simultáneamente:**
 
 Terminal 1:
+
 ```sql
 SELECT transferir_fondos(1, 2, 1000);
 ```
 
 Terminal 2 (ejecutar inmediatamente):
+
 ```sql
 SELECT transferir_fondos(1, 3, 1000);
 ```
 
 **Documenta:**
+
 ```
 ¿Qué pasó con el saldo?:
 
@@ -257,7 +273,7 @@ SELECT transferir_fondos(1, 3, 1000);
 
 ---
 
-## 🛠️ PARTE 5: PROPONER CORRECCIONES
+## PARTE 5: PROPONER CORRECCIONES
 
 Para cada vulnerabilidad, propón una solución:
 
@@ -308,16 +324,18 @@ Consulta SQL para implementar:
 
 ---
 
-## 📊 PARTE 6: REPORTE FINAL
+## PARTE 6: REPORTE FINAL
 
 Crea un reporte que incluya:
 
 1. **Resumen Ejecutivo** (1 página)
+
    - Vulnerabilidades críticas encontradas
    - Problemas de performance
    - Recomendaciones principales
 
 2. **Hallazgos Detallados** (2-3 páginas)
+
    - Cada vulnerabilidad con evidencia
    - Capturas de pantalla
    - Impacto
@@ -329,19 +347,20 @@ Crea un reporte que incluya:
 
 ---
 
-## ✅ Entrega
+## Entrega
 
 **Archivos:**
+
 1. Reporte en PDF
 2. Capturas de pantalla
 3. Archivo `correcciones.sql` con tus soluciones
 
-**Fecha:** _______________  
-**Nombre:** _______________
+**Fecha:** ******\_\_\_******  
+**Nombre:** ******\_\_\_******
 
 ---
 
-## 💡 Consejos
+## Consejos
 
 - Usa `EXPLAIN ANALYZE` para analizar performance
 - Documenta TODO con capturas
